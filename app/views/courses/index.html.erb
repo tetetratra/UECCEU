@@ -1,0 +1,52 @@
+<% if @top_page %>
+  <h1>~~シラバスまとめページ~~</h1>
+  <p>~~~~~シラバスの情報をまとめています~</p>
+  <p>~~~~シラバスの情報をまとめています~~</p>
+  <p>~~~シラバスの情報をまとめています~~~</p>
+  <p>~~シラバスの情報をまとめています~~~~</p>
+  <p>~シラバスの情報をまとめています~~~~~</p>
+<% else %>
+  <% breadcrumb :year %>
+  <%= breadcrumbs pretext: "", separator: " ＞ " %>
+<% end %>
+
+<h1><%= @year %>年度の授業一覧</h1>
+
+<table>
+  <tr>
+    <th>授業科目名</th>
+    <th>英文授業科目名</th>
+    <th>科目番号</th>
+    <th>開講年次</th>
+    <th>開講学期</th>
+    <th>開講コース・課程</th>
+    <th>単位数</th>
+    <th>科目区分</th>
+    <th>開講学科・専攻</th>
+    <th>担当教員名</th>
+    <th>授業関連Webページ</th>
+    <th>キーワード</th>
+  </tr>
+  <% @courses.each do |c| %>
+    <tr>
+      <td><%= link_to c.course_title_japanese, "#{@year}/#{c.url_name}" %></td>
+      <td><%= c.course_title_english %></td>
+      <td><%= c.code %></td>
+      <td><%= c.year_offerd %></td>
+      <td><%= c.semester_offerd %></td>
+      <td><%= c.faculty_offering_the_course %></td>
+      <td><%= c.credits %></td>
+      <td><%= c.category %></td>
+      <td><%= c.cluster_and_department %></td>
+      <td><%= c.lecturer %></td>
+      <td><%= c.course_website %></td>
+      <td><%= c.keyword %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+
+
+
+
