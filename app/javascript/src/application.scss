@@ -1,0 +1,23 @@
+@import '~bootstrap/scss/bootstrap';
+
+
+table.table_index{
+  table-layout: fixed;
+  th:not(.row_tiny,.row_small) {
+    width: 120px;
+  }
+  th.row_tiny{
+    width: 30px;
+  }
+  th.row_small{
+    width: 60px;
+  }
+}
+table.table_show{
+  table-layout: fixed;
+  th {
+    width: 200px;
+  }
+}
+
+
