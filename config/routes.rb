@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root to: 'application#top_page'
 
+  get ':year/search', to: 'courses#search', constraints: { year: /\d{4}/ }, as: 'search'
+
   get ':year/:url_name/:num', to: 'courses#show', constraints: { year: /\d{4}/, url_name: /[\w]+/, num: /\d+/ }, as: 'year_courses'
 
   get ':year/:url_name', to: 'courses#show_list', constraints: { year: /\d{4}/, url_name: /[\w]+/ }, as: 'year_course_list'

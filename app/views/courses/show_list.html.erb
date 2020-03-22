@@ -1,46 +1,16 @@
 <% breadcrumb :course_list %>
 <%= breadcrumbs pretext: '', separator: ' ＞ ' %>
 
-<table>
-  <tr>
-    <th>授業科目名</th>
-    <th>英文授業科目名</th>
-    <th>科目番号</th>
-    <th>開講年次</th>
-    <th>開講学期</th>
-    <th>開講コース・課程</th>
-    <th>単位数</th>
-    <th>科目区分</th>
-    <th>開講学科・専攻</th>
-    <th>担当教員名</th>
-    <th>授業関連Webページ</th>
-    <th>キーワード</th>
-  </tr>
-  <% @courses.each do |c| %>
-    <tr>
-      <td><%= link_to(c.course_title_japanese, "/#{@year}/#{c.url_name}/#{c.inner_index}") %></td>
+<%
+str = if @courses.size == 1
+        @courses.first.course_title_japanese
+      else
+        @courses.map{|c| c.course_title_japanese.chars }.inject{|memo, item|
+          Diff::LCS.LCS(memo, item).join
+        }
+      end
+%>
+<h1>「<%= str %>」の授業一覧</h1>
 
-      <td><%= c.course_title_english %></td>
-      <td><%= c.code %></td>
-      <td><%= c.year_offerd %></td>
-      <td><%= c.semester_offerd %></td>
-      <td><%= c.faculty_offering_the_course %></td>
-      <td><%= c.credits %></td>
-      <td><%= c.category %></td>
-      <td><%= c.cluster_and_department %></td>
-      <td><%= c.lecturer %></td>
-      <% if (url = URI.extract(c.course_website).join("\n")).empty? %>
-        <td><%= c.course_website %></td>
-      <% else %>
-        <td><%= link_to c.course_website, URI.extract(c.course_website).first %></td>
-      <% end %>
-      <td><%= c.keyword.size <= 50 ? c.keyword : c.keyword[0..50] + '...' %></td>
-    </tr>
-  <% end %>
-</table>
-
-
-
-
-
+<%= render 'courses/index_base' %>
 
