@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
-  root to: 'courses#index', year: Time.now.year, top_page: true
+  root to: 'application#top_page'
 
-  get ':year/:url_name', to: 'courses#show', constraints: { year: /\d{4}/, url_name: /[\w]+/ }, as: 'year_courses'
+  get ':year/:url_name/:num', to: 'courses#show', constraints: { year: /\d{4}/, url_name: /[\w]+/, num: /\d+/ }, as: 'year_courses'
+
+  get ':year/:url_name', to: 'courses#show_list', constraints: { year: /\d{4}/, url_name: /[\w]+/ }, as: 'year_course_list'
 
   get ':year', to: 'courses#index', constraints: { year: /\d{4}/ }, as: 'year'
 
