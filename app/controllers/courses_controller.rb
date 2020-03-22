@@ -1,8 +1,30 @@
 class CoursesController < ApplicationController
   def index
-    @courses = Course.where(year: params[:year])
+    @courses = Course.where(year: params[:year]).includes(:comments)
     @year = params[:year]
     @top_page = params[:top_page]
+  end
+
+  def search
+    @query = params[:query] || ''
+    @year = params[:year]
+    columns = [
+      'course_title_japanese',
+      'course_title_english',
+      'topic_and_goals',
+      'prerequisites',
+      'recommended_prerequisites_and_preparation',
+      'course_textbooks_and_materials',
+      'course_outline_and_weekly_schedule',
+      'course_content_utilizing_practical_experience',
+      'preparation_and_review_outside_class',
+      'evaluation_and_grading',
+      'office_hours',
+      'message_for_students',
+      'other',
+      'keyword'
+    ].join(',')
+    @courses = Course.where("CONCAT(#{columns}) LIKE ?", '%' + @query + '%').includes(:comments)
   end
 
   def show_list

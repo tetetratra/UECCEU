@@ -12,6 +12,11 @@ crumb :course_list do
   parent :year
 end
 
+crumb :search do
+  link '検索', search_path
+  parent :year
+end
+
 crumb :course do
   link params[:num], year_courses_path
   parent :course_list

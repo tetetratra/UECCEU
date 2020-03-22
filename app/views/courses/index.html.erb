@@ -3,13 +3,23 @@
 
 <h1><%= @year %>年度の授業一覧</h1>
 
+<%= render 'courses/index_base' %>
 
+<%
+=begin
+%>
 
+<form class="form-inline mt-2 mt-md-0" id="search_form" action='<%="/#{@year}/search"%>'>
+  <div class="input-group-prepend">
+    <span class="input-group-text">全文検索</span>
+  </div>
+  <input name='query' value="" class="form-control mr-sm-2" type="text" placeholder="単語検索" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" id="search_form" type="submit">Search</button>
+</form>
 
+<br>
 
-
-
-<table class="table table_index table-sm">
+<table id="tablesorter" class="table table_index table-sm tablesorter">
   <thead class="thead-light">
     <tr class='header_row'>
       <th scope="row" class="row_tiny">💬</th>
@@ -26,66 +36,67 @@
       <th scope="row">授業関連Webページ</th>
     </tr>
     <tr class='header_row'>
-      <th scope="row" class="row_tiny"></th>
+      <th scope="row" class="row_tiny">
+      </th>
       <th scope="row">
         <form class='search_form course_title_japanese'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="正規|表現|検索">
         </form>
       </th>
       <th scope="row">
         <form class='search_form course_title_english'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row" class="row_small">
         <form class='search_form code'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row" class="row_small">
         <form class='search_form year_offerd'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row" class="row_small">
         <form class='search_form semester_offerd'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row">
         <form class='search_form faculty_offering_the_course'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row" class="row_small">
         <form class='search_form credits'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row">
         <form class='search_form category'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row">
         <form class='search_form cluster_and_department'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row">
         <form class='search_form lecturer'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
       <th scope="row">
         <form class='search_form course_website'>
-          <input type="text" placeholder="search">
+          <input class="form-control" type="text" placeholder="">
         </form>
       </th>
     </tr>
     <% @courses.each_with_index do |c, i| %>
       <tr>
-        <td><%= c.comments.size %></td>
+        <td class='comment_count'><%= c.comments.size %></td>
         <td class='course_title_japanese'><%= link_to(c.course_title_japanese, "/#{@year}/#{c.url_name}/#{c.inner_index}") %></td>
         <td class='course_title_english'><%= c.course_title_english %></td>
         <td class='code'><%= c.code %></td>
@@ -110,6 +121,9 @@
 
 
 
+<%
+=end
+%>
 
 
 
