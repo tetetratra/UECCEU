@@ -14,14 +14,15 @@
   <% end %>
   <br>
   <h3>最近のコメント</h3>
-  <% @comments.each do |comment| %>
+  <% @comments[0..-2].each do |comment| # ラストはnewでできた空レコードなので %>
     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark"><%= comment.course.course_title_japanese %>@<%= (comment.contributor || '匿名さん') %></strong>
-        <%= comment.text %>
+      <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+      <strong class="d-block text-gray-dark">@<%= comment.contributor  || '匿名さん' %></strong>
+      <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>
+      <%= comment.course.course_title_japanese %><br>
+      <%= comment.text %>
       </p>
     </div>
   <% end %>
-
 </body>
 </html>
