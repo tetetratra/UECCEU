@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>UEC Campus Explorer and Uploader</title>
+</head>
+<body>
+  <h1>UEC Campus Explorer and Uploader</h1>
+  <% (2019..2019).each do |year| %>
+    <%= link_to("#{year}年度", "/#{year}") %>
+  <% end %>
+</body>
+</html>
