@@ -1,153 +1,167 @@
 <% breadcrumb :course %>
 <%= breadcrumbs pretext: '', separator: ' ＞ ' %>
 
-<h1><%= @course.course_title_japanese %></h1>
+<h1 id='top'><%= @course.course_title_japanese %></h1>
 
-
-<table>
-  <tr>
-    <th>授業科目名</th>
-    <td><%= @course.course_title_japanese %></td>
-  </tr>
-  <tr>
-    <th>英文授業科目名</th>
-    <td><%= @course.course_title_english %></td>
-  </tr>
-  <tr>
-    <th>科目番号</th>
-    <td><%= @course.code %></td>
-  </tr>
-  <tr>
-    <th>開講年度</th>
-    <td><%= @course.academic_year %></td>
-  </tr>
-  <tr>
-    <th>開講年次</th>
-    <td><%= @course.year_offerd %></td>
-  </tr>
-  <tr>
-    <th>開講学期</th>
-    <td><%= @course.semester_offerd %></td>
-  </tr>
-  <tr>
-    <th>開講コース・課程</th>
-    <td><%= @course.faculty_offering_the_course %></td>
-  </tr>
-  <tr>
-    <th>授業の方法</th>
-    <td><%= @course.teaching_method %></td>
-  </tr>
-  <tr>
-    <th>単位数</th>
-    <td><%= @course.credits %></td>
-  </tr>
-  <tr>
-    <th>科目区分</th>
-    <td><%= @course.category %></td>
-  </tr>
-  <tr>
-    <th>開講学科・専攻</th>
-    <td><%= @course.cluster_and_department %></td>
-  </tr>
-  <tr>
-    <th>担当教員名</th>
-    <td><%= @course.lecturer %></td>
-  </tr>
-  <tr>
-    <th>居室</th>
-    <td><%= @course.office %></td>
-  </tr>
-  <tr>
-    <th>公開E-Mail</th>
-    <td><%= @course.email %></td>
-  </tr>
-  <tr>
-    <th>授業関連Webページ</th>
-    <% if (url = URI.extract(@course.course_website).join("\n")).empty? %>
-      <td><%= @course.course_website %></td>
-    <% else %>
-      <td><%= link_to @course.course_website, URI.extract(@course.course_website).first %></td>
-    <% end %>
-  </tr>
-  <tr>
-    <th>更新日</th>
-    <td><%= @course.last_updated %></td>
-  </tr>
-  <tr>
-    <th>更新状況</th>
-    <td><%= @course.update_status %></td>
-  </tr>
-  <tr>
-    <th>主題および達成目標</th>
-    <td><%= @course.topic_and_goals %></td>
-  </tr>
-  <tr>
-    <th>前もって履修しておくべき科目</th>
-    <td><%= @course.prerequisites %></td>
-  </tr>
-  <tr>
-    <th>前もって履修しておくことが望ましい科目</th>
-    <td><%= @course.recommended_prerequisites_and_preparation %></td>
-  </tr>
-  <tr>
-    <th>教科書等</th>
-    <td><%= @course.course_textbooks_and_materials %></td>
-  </tr>
-  <tr>
-    <th>授業内容とその進め方</th>
-    <td><%= @course.course_outline_and_weekly_schedule %></td>
-  </tr>
-  <tr>
-    <th>実務経験を活かした授業内容(実務経験内容も含む)</th>
-    <td><%= @course.course_content_utilizing_practical_experience %></td>
-  </tr>
-  <tr>
-    <th>授業時間外の学習（予習・復習等）</th>
-    <td><%= @course.preparation_and_review_outside_class %></td>
-  </tr>
-  <tr>
-    <th>成績評価方法および評価基準（最低達成基準を含む）</th>
-    <td><%= @course.evaluation_and_grading %></td>
-  </tr>
-  <tr>
-    <th>オフィスアワー：授業相談</th>
-    <td><%= @course.office_hours %></td>
-  </tr>
-  <tr>
-    <th>学生へのメッセージ</th>
-    <td><%= @course.message_for_students %></td>
-  </tr>
-  <tr>
-    <th>その他</th>
-    <td><%= @course.other %></td>
-  </tr>
-  <tr>
-    <th>キーワード</th>
-    <td><%= @course.keyword %></td>
-  </tr>
+<table class="table table_show">
+  <thead class="thead-light">
+    <tr>
+      <th scope="row">授業科目名</th>
+      <td><%= @course.course_title_japanese %></td>
+    </tr>
+    <tr>
+      <th scope="row">英文授業科目名</th>
+      <td><%= @course.course_title_english %></td>
+    </tr>
+    <tr>
+      <th scope="row">科目番号</th>
+      <td><%= @course.code %></td>
+    </tr>
+    <tr>
+      <th scope="row">開講年度</th>
+      <td><%= @course.academic_year %></td>
+    </tr>
+    <tr>
+      <th scope="row">開講年次</th>
+      <td><%= @course.year_offerd %></td>
+    </tr>
+    <tr>
+      <th scope="row">開講学期</th>
+      <td><%= @course.semester_offerd %></td>
+    </tr>
+    <tr>
+      <th scope="row">開講コース・課程</th>
+      <td><%= @course.faculty_offering_the_course %></td>
+    </tr>
+    <tr>
+      <th scope="row">授業の方法</th>
+      <td><%= @course.teaching_method %></td>
+    </tr>
+    <tr>
+      <th scope="row">単位数</th>
+      <td><%= @course.credits %></td>
+    </tr>
+    <tr>
+      <th scope="row">科目区分</th>
+      <td><%= @course.category %></td>
+    </tr>
+    <tr>
+      <th scope="row">開講学科・専攻</th>
+      <td><%= @course.cluster_and_department %></td>
+    </tr>
+    <tr>
+      <th scope="row">担当教員名</th>
+      <td><%= @course.lecturer %></td>
+    </tr>
+    <tr>
+      <th scope="row">居室</th>
+      <td><%= @course.office %></td>
+    </tr>
+    <tr>
+      <th scope="row">公開E-Mail</th>
+      <td><%= @course.email %></td>
+    </tr>
+    <tr>
+      <th scope="row">授業関連Webページ</th>
+      <% if (url = URI.extract(@course.course_website).join("\n")).empty? %>
+        <td><%= @course.course_website %></td>
+      <% else %>
+        <td><%= link_to @course.course_website, URI.extract(@course.course_website).first %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">更新日</th>
+      <td><%= @course.last_updated %></td>
+    </tr>
+    <tr>
+      <th scope="row">更新状況</th>
+      <td><%= @course.update_status %></td>
+    </tr>
+    <tr>
+      <th scope="row">主題および達成目標</th>
+      <td><%= @course.topic_and_goals %></td>
+    </tr>
+    <tr>
+      <th scope="row">前もって履修しておくべき科目</th>
+      <td><%= @course.prerequisites %></td>
+    </tr>
+    <tr>
+      <th scope="row">前もって履修しておくことが望ましい科目</th>
+      <td><%= @course.recommended_prerequisites_and_preparation %></td>
+    </tr>
+    <tr>
+      <th scope="row">教科書等</th>
+      <td><%= @course.course_textbooks_and_materials %></td>
+    </tr>
+    <tr>
+      <th scope="row">授業内容とその進め方</th>
+      <td><%= @course.course_outline_and_weekly_schedule %></td>
+    </tr>
+    <tr>
+      <th scope="row">実務経験を活かした授業内容(実務経験内容も含む)</th>
+      <td><%= @course.course_content_utilizing_practical_experience %></td>
+    </tr>
+    <tr>
+      <th scope="row">授業時間外の学習（予習・復習等）</th>
+      <td><%= @course.preparation_and_review_outside_class %></td>
+    </tr>
+    <tr>
+      <th scope="row">成績評価方法および評価基準（最低達成基準を含む）</th>
+      <td><%= @course.evaluation_and_grading %></td>
+    </tr>
+    <tr>
+      <th scope="row">オフィスアワー：授業相談</th>
+      <td><%= @course.office_hours %></td>
+    </tr>
+    <tr>
+      <th scope="row">学生へのメッセージ</th>
+      <td><%= @course.message_for_students %></td>
+    </tr>
+    <tr>
+      <th scope="row">その他</th>
+      <td><%= @course.other %></td>
+    </tr>
+    <tr>
+      <th scope="row">キーワード</th>
+      <td><%= @course.keyword %></td>
+    </tr>
+  </thead>
 </table>
 
 
-<h2>コメント</h2>
+<div class="my-3 p-3 bg-white rounded box-shadow">
+  <h2 class="border-bottom border-gray pb-2 mb-0">コメント</h2>
+  <% @comments[0..-2].each do |comment| # ラストはnewでできた空レコードなので %>
 
-<ul>
-    <% @comments[0..-2].each do |comment| # ラストはnewでできた空レコードなので %>
-      <li><%= comment.text %></li>
-    <% end %>
-</ul>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">@<%= comment.try(:user_name) || '匿名さん' %></strong>
+        <%= comment.text %>
+      </p>
+    </div>
+
+  <% end %>
+</div>
+
+
+
 
 
 <h2>コメント投稿</h2>
 
 <%= form_with(model: [@course, @comment], local: true, id: 'comment_form') do |f| %>
-    <%= f.text_area :text, size: "50x10", style: 'resize: none' %>
-    <br>
-    <%= f.submit 'コメントする' %>
-  <% end %>
-<% if flash[:notice] %>
-    <p><%= flash[:notice] %></p>
-  <% end %>
+  <%= f.label('名前') %>
+  <%= f.text_area(:text, size: "10x1", value: '匿名さん', style: 'resize: none')%>
+  <br>
+  <%= f.text_area(:text, size: "50x5", style: 'resize: none')%>
+  <br>
+  <%= f.submit('コメントする', class: "btn btn-primary") %>
+<% end %>
 
-<input type="button" value="ページ先頭へ" onClick="location.href='<%= request.path %>'">
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+<br>
+<a class="btn btn-secondary" type="button" href='#top'>ページ先頭へ</a>
 
 
