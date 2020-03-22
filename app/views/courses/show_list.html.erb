@@ -1,7 +1,5 @@
-<% breadcrumb :year %>
-<%= breadcrumbs pretext: "", separator: " ＞ " %>
-
-<h1><%= @year %>年度の授業一覧</h1>
+<% breadcrumb :course_list %>
+<%= breadcrumbs pretext: '', separator: ' ＞ ' %>
 
 <table>
   <tr>
@@ -18,9 +16,10 @@
     <th>授業関連Webページ</th>
     <th>キーワード</th>
   </tr>
-  <% @courses.each_with_index do |c, i| %>
+  <% @courses.each do |c| %>
     <tr>
       <td><%= link_to(c.course_title_japanese, "/#{@year}/#{c.url_name}/#{c.inner_index}") %></td>
+
       <td><%= c.course_title_english %></td>
       <td><%= c.code %></td>
       <td><%= c.year_offerd %></td>
