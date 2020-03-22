@@ -1,14 +1,18 @@
 
 crumb :root do
-  link "トップページ", root_path
+  link 'TOP', root_path
 end
 
 crumb :year do
   link params[:year], year_path
 end
 
-crumb :course do
-  link params[:url_name], year_courses_path
+crumb :course_list do
+  link params[:url_name], year_course_list_path
   parent :year
 end
 
+crumb :course do
+  link params[:num], year_courses_path
+  parent :course_list
+end

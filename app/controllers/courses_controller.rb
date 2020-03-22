@@ -5,11 +5,20 @@ class CoursesController < ApplicationController
     @top_page = params[:top_page]
   end
 
+  def show_list
+    @courses = Course.where(year: params[:year], url_name: params[:url_name])
+    @year = params[:year]
+  end
+
   def show
     if params[:id]
       @course = Course.find(params[:id])
     else
-      @course = Course.find_by(year: params[:year], url_name: params[:url_name])
+      if (ind = params[:num].to_i - 1) >= 0
+        @course = Course.where(year: params[:year], url_name: params[:url_name])[ind]
+      else
+        @course = nil
+      end
     end
 
     if @course.nil?

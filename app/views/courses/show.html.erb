@@ -63,7 +63,11 @@
   </tr>
   <tr>
     <th>授業関連Webページ</th>
-    <td><%= @course.course_website %></td>
+    <% if (url = URI.extract(@course.course_website).join("\n")).empty? %>
+      <td><%= @course.course_website %></td>
+    <% else %>
+      <td><%= link_to @course.course_website, URI.extract(@course.course_website).first %></td>
+    <% end %>
   </tr>
   <tr>
     <th>更新日</th>
