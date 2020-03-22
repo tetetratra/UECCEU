@@ -6,8 +6,22 @@
 </head>
 <body>
   <h1>UEC Campus Explorer and Uploader</h1>
+  <br>
+  <p>授業を検索したり、授業の感想を共有できたりします</p>
+  <h2>授業一覧</h2>
   <% (2019..2019).each do |year| %>
-    <%= link_to("#{year}年度", "/#{year}") %>
+    <h3><%= link_to("#{year}年度", "/#{year}") %></h3>
   <% end %>
+  <br>
+  <h3>最近のコメント</h3>
+  <% @comments.each do |comment| %>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark"><%= comment.course.course_title_japanese %>@<%= (comment.contributor || '匿名さん') %></strong>
+        <%= comment.text %>
+      </p>
+    </div>
+  <% end %>
+
 </body>
 </html>
