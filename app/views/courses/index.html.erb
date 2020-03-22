@@ -3,50 +3,15 @@
 
 <h1><%= @year %>年度の授業一覧</h1>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-<script type="text/javascript">
-$(
-  function() {
-    $('#search-text').on(
-      'input',
-      function(){
-        var searchText = $(this).val() // 検索ボックスに入力された値
-        var targetText
-        $('table td.title > a').each(function(){
-          targetText = $(this).text();
-          // 検索対象となるリストに入力された文字列が存在するかどうかを判断
-          if (targetText.indexOf(searchText) != -1) {
-            $(this).parent().parent().removeClass('d-none');
-          } else {
-            $(this).parent().parent().addClass('d-none');
-          }
-        })
-      }
-    )
-  }
-)
-</script>
 
-  <div class="wrapper">
-    <div class="search-area">
-      <form>
-        <input type="text" id="search-text" placeholder="検索ワードを入力">
-      </form>
-      <div class="search-result">
-        <div class="search-result__hit-num"></div>
-        <div id="search-result__list"></div>
-      </div>
-    </div>
-  </div>
 
 
 
 
 <table class="table table_index table-sm">
   <thead class="thead-light">
-    <tr>
+    <tr class='header_row'>
       <th scope="row" class="row_tiny">💬</th>
       <th scope="row">授業科目名</th>
       <th scope="row">英文授業科目名</th>
@@ -60,24 +25,84 @@ $(
       <th scope="row">担当教員名</th>
       <th scope="row">授業関連Webページ</th>
     </tr>
+    <tr class='header_row'>
+      <th scope="row" class="row_tiny"></th>
+      <th scope="row">
+        <form class='search_form course_title_japanese'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row">
+        <form class='search_form course_title_english'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row" class="row_small">
+        <form class='search_form code'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row" class="row_small">
+        <form class='search_form year_offerd'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row" class="row_small">
+        <form class='search_form semester_offerd'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row">
+        <form class='search_form faculty_offering_the_course'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row" class="row_small">
+        <form class='search_form credits'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row">
+        <form class='search_form category'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row">
+        <form class='search_form cluster_and_department'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row">
+        <form class='search_form lecturer'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+      <th scope="row">
+        <form class='search_form course_website'>
+          <input type="text" placeholder="search">
+        </form>
+      </th>
+    </tr>
     <% @courses.each_with_index do |c, i| %>
       <tr>
-        <td class="comment_cnt"><%= c.comments.size %></td>
-        <td class='title'><%= link_to(c.course_title_japanese, "/#{@year}/#{c.url_name}/#{c.inner_index}") %></td>
-        <td><%= c.course_title_english %></td>
-        <td><%= c.code %></td>
-        <td><%= c.year_offerd %></td>
-        <td><%= c.semester_offerd %></td>
-        <td><%= c.faculty_offering_the_course %></td>
-        <td><%= c.credits %></td>
-        <td><%= c.category %></td>
-        <td><%= c.cluster_and_department %></td>
-        <td><%= c.lecturer %></td>
-        <% if (url = URI.extract(c.course_website).join("\n")).empty? %>
-          <td style="word-wrap:break-word;"><%= c.course_website %></td>
-        <% else %>
-          <td style="word-wrap:break-word;"><%= link_to c.course_website, URI.extract(c.course_website).first %></td>
-        <% end %>
+        <td><%= c.comments.size %></td>
+        <td class='course_title_japanese'><%= link_to(c.course_title_japanese, "/#{@year}/#{c.url_name}/#{c.inner_index}") %></td>
+        <td class='course_title_english'><%= c.course_title_english %></td>
+        <td class='code'><%= c.code %></td>
+        <td class='year_offerd'><%= c.year_offerd %></td>
+        <td class='semester_offerd'><%= c.semester_offerd %></td>
+        <td class='faculty_offering_the_course'><%= c.faculty_offering_the_course %></td>
+        <td class='credits'><%= c.credits %></td>
+        <td class='category'><%= c.category %></td>
+        <td class='cluster_and_department'><%= c.cluster_and_department %></td>
+        <td class='lecturer'><%= c.lecturer %></td>
+        <td class='course_website' style="word-wrap:break-word;">
+          <% if (url = URI.extract(c.course_website).join("\n")).empty? %>
+            <%= c.course_website %>
+          <% else %>
+            <%= link_to c.course_website, URI.extract(c.course_website).first %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </thead>
