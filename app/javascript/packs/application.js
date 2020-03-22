@@ -25,7 +25,8 @@ import '../src/application.scss'
 var class_names = [
   'course_title_japanese',
   'course_title_english',
-  'code',
+  'day_and_period',
+  'timetable_code',
   'year_offerd',
   'semester_offerd',
   'faculty_offering_the_course',
@@ -84,28 +85,9 @@ $(
 )
 
 
+// sort table
 
-// class_names.forEach(
-//   class_name => {
-//     $(
-//       function() {
-//         $('form.search_form.' + class_name + '> input').on(
-//           'input',
-//           function(){
-//             var searchText = $(this).val()
-//             var targetText
-//             $('table td.' + class_name).each(function(){
-//               targetText = $(this).text()
-//               if (targetText.indexOf(searchText) != -1) {
-//                 $(this).parent().removeClass('d-none')
-//               } else {
-//                 $(this).parent().addClass('d-none')
-//               }
-//             })
-//           }
-//         )
-//       }
-//     )
 
-//   }
-// )
+
+
+

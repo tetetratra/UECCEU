@@ -7,59 +7,67 @@
   <thead class="thead-light">
     <tr>
       <th scope="row">授業科目名</th>
-      <td><%= @course.course_title_japanese %></td>
+      <td><%= raw @course.course_title_japanese.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">英文授業科目名</th>
-      <td><%= @course.course_title_english %></td>
+      <td><%= raw @course.course_title_english.then{|x|nl2br(x)} %></td>
+    </tr>
+    <tr>
+      <th scope="row">曜日・時限</th>
+      <td><%= raw @course.day_and_period.then{|x|nl2br(x)} %></td>
+    </tr>
+    <tr>
+      <th scope="row">時間割コード</th>
+      <td><%= raw @course.timetable_code.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">科目番号</th>
-      <td><%= @course.code %></td>
+      <td><%= raw @course.code.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">開講年度</th>
-      <td><%= @course.academic_year %></td>
+      <td><%= raw @course.academic_year.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">開講年次</th>
-      <td><%= @course.year_offerd %></td>
+      <td><%= raw @course.year_offerd.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">開講学期</th>
-      <td><%= @course.semester_offerd %></td>
+      <td><%= raw @course.semester_offerd.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">開講コース・課程</th>
-      <td><%= @course.faculty_offering_the_course %></td>
+      <td><%= raw @course.faculty_offering_the_course.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">授業の方法</th>
-      <td><%= @course.teaching_method %></td>
+      <td><%= raw @course.teaching_method.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">単位数</th>
-      <td><%= @course.credits %></td>
+      <td><%= raw @course.credits.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">科目区分</th>
-      <td><%= @course.category %></td>
+      <td><%= raw @course.category.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">開講学科・専攻</th>
-      <td><%= @course.cluster_and_department %></td>
+      <td><%= raw @course.cluster_and_department.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">担当教員名</th>
-      <td><%= @course.lecturer %></td>
+      <td><%= raw @course.lecturer.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">居室</th>
-      <td><%= @course.office %></td>
+      <td><%= raw @course.office.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">公開E-Mail</th>
-      <td><%= @course.email %></td>
+      <td><%= raw @course.email.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">授業関連Webページ</th>
@@ -71,59 +79,59 @@
     </tr>
     <tr>
       <th scope="row">更新日</th>
-      <td><%= @course.last_updated %></td>
+      <td><%= raw @course.last_updated.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">更新状況</th>
-      <td><%= @course.update_status %></td>
+      <td><%= raw @course.update_status.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">主題および達成目標</th>
-      <td><%= @course.topic_and_goals %></td>
+      <td><%= raw @course.topic_and_goals.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">前もって履修しておくべき科目</th>
-      <td><%= @course.prerequisites %></td>
+      <td><%= raw @course.prerequisites.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">前もって履修しておくことが望ましい科目</th>
-      <td><%= @course.recommended_prerequisites_and_preparation %></td>
+      <td><%= raw @course.recommended_prerequisites_and_preparation.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">教科書等</th>
-      <td><%= @course.course_textbooks_and_materials %></td>
+      <td><%= raw @course.course_textbooks_and_materials.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">授業内容とその進め方</th>
-      <td><%= @course.course_outline_and_weekly_schedule %></td>
+      <td><%= raw @course.course_outline_and_weekly_schedule.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">実務経験を活かした授業内容(実務経験内容も含む)</th>
-      <td><%= @course.course_content_utilizing_practical_experience %></td>
+      <td><%= raw @course.course_content_utilizing_practical_experience.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">授業時間外の学習（予習・復習等）</th>
-      <td><%= @course.preparation_and_review_outside_class %></td>
+      <td><%= raw @course.preparation_and_review_outside_class.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">成績評価方法および評価基準（最低達成基準を含む）</th>
-      <td><%= @course.evaluation_and_grading %></td>
+      <td><%= raw @course.evaluation_and_grading.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">オフィスアワー：授業相談</th>
-      <td><%= @course.office_hours %></td>
+      <td><%= raw @course.office_hours.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">学生へのメッセージ</th>
-      <td><%= @course.message_for_students %></td>
+      <td><%= raw @course.message_for_students.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">その他</th>
-      <td><%= @course.other %></td>
+      <td><%= raw @course.other.then{|x|nl2br(x)} %></td>
     </tr>
     <tr>
       <th scope="row">キーワード</th>
-      <td><%= @course.keyword %></td>
+      <td><%= raw @course.keyword.then{|x|nl2br(x)} %></td>
     </tr>
   </thead>
 </table>
@@ -135,7 +143,7 @@
 
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@<%= comment.try(:user_name) || '匿名さん' %></strong>
+        <strong class="d-block text-gray-dark">@<%= comment.contributor  || '匿名さん' %></strong>
         <%= comment.text %>
       </p>
     </div>
