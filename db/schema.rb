@@ -13,16 +13,18 @@
 ActiveRecord::Schema.define(version: 2020_03_23_021437) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "course_id"
     t.text "text"
     t.text "contributor"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "course_id"
     t.index ["course_id"], name: "index_comments_on_course_id"
   end
 
   create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "inner_index"
+    t.integer "year"
+    t.text "url_name"
     t.text "course_title_japanese"
     t.text "course_title_english"
     t.text "code"
@@ -52,12 +54,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_021437) do
     t.text "message_for_students"
     t.text "other"
     t.text "keyword"
-    t.integer "year"
-    t.text "url_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.text "day_and_period"
     t.text "timetable_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "comments", "courses"
