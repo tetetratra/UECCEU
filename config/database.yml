@@ -52,3 +52,8 @@ production:
   database: uecceu_production
   username: uecceu
   password: <%= ENV['uecceu_DATABASE_PASSWORD'] %>
+  # [【初心者向け】railsアプリをherokuを使って確実にデプロイする方法【決定版】 - Qiita](https://qiita.com/kazukimatsumoto/items/a0daa7281a3948701c39#configdatebaseyml%E3%81%AE%E8%A8%AD%E5%AE%9A)
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
