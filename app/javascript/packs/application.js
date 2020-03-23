@@ -87,6 +87,74 @@ $(
 
 // sort table
 
+$(
+  function() {
+    $('#sort_button').submit
+  }
+)
+
+$(
+  function() {
+    $('#sort_button_asc').on(
+      'click',
+      function(){
+        var arr = []
+        $('table.table_index > thead > tr:not(.header_row)').each(
+          function(index, row){
+            arr.push(row)
+            row.remove()
+          }
+        )
+        arr.sort( // 破壊的
+          function(a,b) {
+            var a = Number(a.querySelector('td.comment_count').textContent)
+            var b = Number(b.querySelector('td.comment_count').textContent)
+            return b - a
+          }
+        )
+        arr.forEach(
+          function(row){
+            $('table.table_index > thead').append(row)
+          }
+        )
+      }
+    )
+  }
+)
+
+
+$(
+  function() {
+    $('#sort_button_desc').on(
+      'click',
+      function(){
+        var arr = []
+        $('table.table_index > thead > tr:not(.header_row)').each(
+          function(index, row){
+            arr.push(row)
+            row.remove()
+          }
+        )
+        arr.sort( // 破壊的
+          function(a,b) {
+            var a = Number(a.querySelector('td.comment_count').textContent)
+            var b = Number(b.querySelector('td.comment_count').textContent)
+            return a - b
+          }
+        )
+        arr.forEach(
+          function(row){
+            $('table.table_index > thead').append(row)
+          }
+        )
+      }
+    )
+  }
+)
+
+
+
+
 
 
 
