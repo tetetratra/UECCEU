@@ -1,4 +1,5 @@
-require_relative './common.rb'
+require_relative './crawler.rb'
+require_relative './parser.rb'
 
 # (2010..2019)
 year = 2019
