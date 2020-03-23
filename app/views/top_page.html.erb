@@ -14,7 +14,7 @@
   <% end %>
   <br>
   <h3>最近のコメント</h3>
-  <% @comments[0..-2].each do |comment| # ラストはnewでできた空レコードなので %>
+  <% @comments.each do |comment| %>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
       <strong class="d-block text-gray-dark">@<%= comment.contributor  || '匿名さん' %></strong>
