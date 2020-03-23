@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem "gretel" # パンくずリスト
 gem "diff-lcs" # LCS
+gem 'rename'
 
 
 group :development, :test do

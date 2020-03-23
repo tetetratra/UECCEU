@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_035417) do
+ActiveRecord::Schema.define(version: 2020_03_23_021437) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "text"
+    t.text "text"
+    t.text "contributor"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "course_id"
@@ -21,23 +22,24 @@ ActiveRecord::Schema.define(version: 2020_03_21_035417) do
   end
 
   create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name"
-    t.string "english_name"
-    t.string "code"
-    t.string "academic_year"
-    t.string "year_offerd"
-    t.string "semester_offerd"
-    t.string "faculty_offering_the_course"
-    t.string "teaching_method"
-    t.string "credits"
-    t.string "category"
-    t.string "cluster_and_department"
-    t.string "lecturer"
-    t.string "office"
-    t.string "email"
-    t.string "course_website"
-    t.string "last_updated"
-    t.string "update_status"
+    t.integer "inner_index"
+    t.text "course_title_japanese"
+    t.text "course_title_english"
+    t.text "code"
+    t.text "academic_year"
+    t.text "year_offerd"
+    t.text "semester_offerd"
+    t.text "faculty_offering_the_course"
+    t.text "teaching_method"
+    t.text "credits"
+    t.text "category"
+    t.text "cluster_and_department"
+    t.text "lecturer"
+    t.text "office"
+    t.text "email"
+    t.text "course_website"
+    t.text "last_updated"
+    t.text "update_status"
     t.text "topic_and_goals"
     t.text "prerequisites"
     t.text "recommended_prerequisites_and_preparation"
@@ -51,28 +53,11 @@ ActiveRecord::Schema.define(version: 2020_03_21_035417) do
     t.text "other"
     t.text "keyword"
     t.integer "year"
-    t.string "url_name"
+    t.text "url_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "lectures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "year"
-    t.string "term"
-    t.string "academic_year"
-    t.string "faculty_offering_the_course"
-    t.string "dayofweek"
-    t.string "code"
-    t.string "category"
-    t.string "course_title_japanese"
-    t.string "teacher"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "course_title_english"
-    t.string "year_offerd"
-    t.string "semester_offerd"
-    t.string "teaching_method"
-    t.string "credits"
+    t.text "day_and_period"
+    t.text "timetable_code"
   end
 
   add_foreign_key "comments", "courses"
