@@ -1,0 +1,8 @@
+<% breadcrumb :year_index %>
+<%= breadcrumbs pretext: '', separator: ' / ' %>
+<br>
+<h1>年度一覧</h1>
+<% @years.each do |y| %>
+  <h2><%= link_to("#{y.year}年度", y) %></h2>
+<% end %>
+

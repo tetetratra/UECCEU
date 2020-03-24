@@ -1,35 +1,36 @@
-<% breadcrumb :year %>
-<%= breadcrumbs pretext: "", separator: " ＞ " %>
-
-<h1><%= @year %>年度の授業一覧</h1>
-
-<%= render 'courses/index_base' %>
-
-<%
-=begin
-%>
-
-<form class="form-inline mt-2 mt-md-0" id="search_form" action='<%="/#{@year}/search"%>'>
-  <div class="input-group-prepend">
-    <span class="input-group-text">全文検索</span>
-  </div>
-  <input name='query' value="" class="form-control mr-sm-2" type="text" placeholder="単語検索" aria-label="Search">
-  <button class="btn btn-outline-success my-2 my-sm-0" id="search_form" type="submit">Search</button>
-</form>
+<% breadcrumb :course_index %>
+<%= breadcrumbs pretext: '', separator: ' / ' %>
 
 <br>
+<% if @query %>
+  <h2>「<%= @query %>」の全文検索結果</h2>
+<% else %>
+  <h2><%= @year.year %>年度の授業一覧</h2>
+<% end %>
 
-<table id="tablesorter" class="table table_index table-sm tablesorter">
+<%= form_with(url: year_courses_path, local: true, method: :get, class: 'form-inline mt-2 mt-md-0') do |f| %>
+  <div class="input-group-prepend">
+    <%= f.label('シラバス全文検索', class: 'input-group-text') %>
+    <%= f.text_field(:query, placeholder: '単語検索', class: 'form-control mr-sm-2')%>
+    <%= f.submit('検索', class: 'btn btn-outline-success my-2 my-sm-0') %>
+  </div>
+<% end %>
+
+<br>
+<p>検索やソートに失敗するときはページをリロードしてみてください</p>
+
+<table class="table table_index table-sm table-bordered">
   <thead class="thead-light">
     <tr class='header_row'>
       <th scope="row" class="row_tiny">💬</th>
       <th scope="row">授業科目名</th>
       <th scope="row">英文授業科目名</th>
-      <th scope="row" class="row_small">科目番号</th>
+      <th scope="row" class="row_small">曜日・時限</th>
+      <th scope="row" class="row_small">時間割コード</th>
       <th scope="row" class="row_small">開講年次</th>
       <th scope="row" class="row_small">開講学期</th>
       <th scope="row">開講コース・課程</th>
-      <th scope="row" class="row_small">単位数</th>
+      <th scope="row" class="row_tiny">単位数</th>
       <th scope="row">科目区分</th>
       <th scope="row">開講学科・専攻</th>
       <th scope="row">担当教員名</th>
@@ -37,10 +38,12 @@
     </tr>
     <tr class='header_row'>
       <th scope="row" class="row_tiny">
+        <button id='sort_button_asc' type="button" class="btn btn-light btn-xm" style="font-size: 0.5em;">▲</button>
+        <button id='sort_button_desc' type="button" class="btn btn-light btn-xm" style="font-size: 0.5em;">▼</button>
       </th>
       <th scope="row">
         <form class='search_form course_title_japanese'>
-          <input class="form-control" type="text" placeholder="正規|表現|検索">
+          <input class="form-control" type="text" placeholder="正規|表現|ok">
         </form>
       </th>
       <th scope="row">
@@ -49,7 +52,12 @@
         </form>
       </th>
       <th scope="row" class="row_small">
-        <form class='search_form code'>
+        <form class='search_form day_and_period'>
+          <input class="form-control" type="text" placeholder="">
+        </form>
+      </th>
+      <th scope="row" class="row_small">
+        <form class='search_form timetable_code'>
           <input class="form-control" type="text" placeholder="">
         </form>
       </th>
@@ -94,12 +102,13 @@
         </form>
       </th>
     </tr>
-    <% @courses.each_with_index do |c, i| %>
+    <% @courses.each do |c| %>
       <tr>
         <td class='comment_count'><%= c.comments.size %></td>
-        <td class='course_title_japanese'><%= link_to(c.course_title_japanese, "/#{@year}/#{c.url_name}/#{c.inner_index}") %></td>
+        <td class='course_title_japanese'><%= link_to(c.course_title_japanese, url_for(controller: 'courses', action: 'show', id: c.uniqueslug))%></td>
         <td class='course_title_english'><%= c.course_title_english %></td>
-        <td class='code'><%= c.code %></td>
+        <td class='day_and_period'><%= c.day_and_period %></td>
+        <td class='timetable_code'><%= c.timetable_code %></td>
         <td class='year_offerd'><%= c.year_offerd %></td>
         <td class='semester_offerd'><%= c.semester_offerd %></td>
         <td class='faculty_offering_the_course'><%= c.faculty_offering_the_course %></td>
@@ -118,12 +127,3 @@
     <% end %>
   </thead>
 </table>
-
-
-
-<%
-=end
-%>
-
-
-

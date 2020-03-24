@@ -1,0 +1,6 @@
+<% breadcrumb :year %>
+<%= breadcrumbs pretext: '', separator: ' / ' %>
+<br>
+<h1><%= @year %>年度のページ一覧</h1>
+<h2><%= link_to '授業一覧', year_courses_path(year_id: @year) %></h2>
+

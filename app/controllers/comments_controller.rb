@@ -1,17 +1,16 @@
 class CommentsController < ApplicationController
   def create
-    params.permit! # アクセスできないのを許可
-    comment = Comment.new(text: params[:comment][:text], course_id: params[:course_id], contributor: params[:comment][:contributor])
-    course = Course.find(params[:course_id])
-    if comment.save
-      redirect_to "/#{course.year}/#{course.url_name}/#{course.inner_index}#comment_form", notice: 'コメントしました'
-    else
-      if params[:comment][:text].strip.empty?
-        redirect_to "/#{course.year}/#{course.url_name}/#{course.inner_index}#comment_form", notice: '空文字のコメントは出来ません'
-      else
-        redirect_to "/#{course.year}/#{course.url_name}/#{course.inner_index}#comment_form", notice: 'コメント処理時にエラーが起きました'
-      end
-    end
+    year_id               = params.require(:year_id)
+    url_name, inner_index = params.require(:course_id).split(/-(?=\d+$)/)
+    contributor           = params.require(:comment).require(:contributor)
+    text                  = params.require(:comment).require(:text)
+    @year   = Year.friendly.find(year_id)
+    @course = @year.courses.find_by(url_name: url_name, inner_index: inner_index)
+    @course.comments.create(
+      contributor: contributor,
+      text: text
+    )
+    @scrall_flag = true
+    redirect_to [@year, @course]
   end
 end
-

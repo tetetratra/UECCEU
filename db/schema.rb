@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_021437) do
+ActiveRecord::Schema.define(version: 2020_03_24_063942) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "course_id"
@@ -58,7 +58,16 @@ ActiveRecord::Schema.define(version: 2020_03_23_021437) do
     t.text "timetable_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "year_id"
+    t.index ["year_id"], name: "index_courses_on_year_id"
+  end
+
+  create_table "years", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "year"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "comments", "courses"
+  add_foreign_key "courses", "years"
 end

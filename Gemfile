@@ -31,7 +31,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem "gretel" # パンくずリスト
 gem "diff-lcs" # LCS
 gem 'rename'
-
+gem 'friendly_id'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
