@@ -1,56 +1,35 @@
 class CoursesController < ApplicationController
   def index
-    @courses = Course.where(year: params[:year]).includes(:comments)
-    @year = params[:year]
-    @top_page = params[:top_page]
-  end
-
-  def search
-    @query = params[:query] || ''
-    @year = params[:year]
-    columns = [
-      'course_title_japanese',
-      'course_title_english',
-      'topic_and_goals',
-      'prerequisites',
-      'recommended_prerequisites_and_preparation',
-      'course_textbooks_and_materials',
-      'course_outline_and_weekly_schedule',
-      'course_content_utilizing_practical_experience',
-      'preparation_and_review_outside_class',
-      'evaluation_and_grading',
-      'office_hours',
-      'message_for_students',
-      'other',
-      'keyword'
-    ].join(',')
-    @courses = Course.where("CONCAT(#{columns}) LIKE ?", '%' + @query + '%').includes(:comments)
-  end
-
-  def show_list
-    @courses = Course.where(year: params[:year], url_name: params[:url_name])
-    @year = params[:year]
+    @year = Year.friendly.find(params.require('year_id'))
+    if @query = params.permit(:query)[:query]
+      columns = [
+        'course_title_japanese',
+        'course_title_english',
+        'topic_and_goals',
+        'prerequisites',
+        'recommended_prerequisites_and_preparation',
+        'course_textbooks_and_materials',
+        'course_outline_and_weekly_schedule',
+        'course_content_utilizing_practical_experience',
+        'preparation_and_review_outside_class',
+        'evaluation_and_grading',
+        'office_hours',
+        'message_for_students',
+        'other',
+        'keyword'
+      ].join(',')
+      @courses = @year.courses.where("CONCAT(#{columns}) LIKE ?", '%' + @query + '%').includes(:comments)
+    else
+      @courses = @year.courses.includes(:comments)
+    end
   end
 
   def show
-    if params[:id]
-      @course = Course.find(params[:id])
-    else
-      if (ind = params[:num].to_i - 1) >= 0
-        @course = Course.where(year: params[:year], url_name: params[:url_name])[ind]
-      else
-        @course = nil
-      end
-    end
-
-    if @course.nil?
-      render template: 'errors/error_404'
-    else
-      @comments = @course.comments
-      @comment  = @course.comments.new
-    end
-  end
-
-  def not_found
+    url_name, inner_index = params.require('id').split(/-(?=\d+$)/) # 末尾のハイフンで区切る
+    year                  = params.require('year_id')
+    @year     = Year.friendly.find(year)
+    @course   = @year.courses.find_by(url_name: url_name, inner_index: inner_index)
+    @comments = @course.comments
+    @comment  = Comment.new
   end
 end

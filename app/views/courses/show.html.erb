@@ -1,7 +1,10 @@
+<div id='top'><div>
 <% breadcrumb :course %>
-<%= breadcrumbs pretext: '', separator: ' ＞ ' %>
+<%= breadcrumbs pretext: '', separator: ' / ' %>
 
-<h1 id='top'><%= @course.course_title_japanese %></h1>
+<h1><%= @course.course_title_japanese %></h1>
+
+<a id="comments" class="btn btn-secondary" type="button" href='#bottom'>コメントを見る</a>
 
 <table class="table table_show">
   <thead class="thead-light">
@@ -137,37 +140,33 @@
 </table>
 
 
-<div class="my-3 p-3 bg-white rounded box-shadow">
-  <h2 class="border-bottom border-gray pb-2 mb-0">コメント</h2>
-  <% @comments[0..-2].each do |comment| # ラストはnewでできた空レコードなので %>
-
+<div class="my-3 p-3 bg-white rounded box-shadow"'>
+  <h2 class="border-bottom border-gray pb-2 mb-0">コメント・感想</h2>
+  <% @comments.each do |comment| %>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-      <strong class="d-block text-gray-dark">@<%= comment.contributor  || '匿名さん' %></strong>
-      <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %><br>
-      <%= comment.text %>
+        <strong class="d-block text-gray-dark">@<%= comment.contributor  || '匿名さん' %></strong>
+        <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %><br>
+        <%= comment.text %>
       </p>
     </div>
-
   <% end %>
 </div>
 
 
-<h2>コメント投稿</h2>
+<h2>コメント・感想の投稿</h2>
 
-<%= form_with(model: [@course, @comment], local: true, id: 'comment_form') do |f| %>
-  <%= f.label('名前') %>
-  <%= f.text_area(:contributor, size: "10x1", value: '匿名さん', style: 'resize: none')%>
+<%= form_with(model: [@year, @course, @comment], local: true, class: 'form-inline mt-2 mt-md-0', id: 'search_form') do |f| %>
+  <div class="input-group-prepend">
+    <%= f.label '名前', class: 'input-group-text'%>
+    <%= f.text_field :contributor, value: '匿名', class: 'form-control mr-sm-2' %>
+  </div>
   <br>
-  <%= f.text_area(:text, size: "50x5", style: 'resize: none')%>
-  <br>
-  <%= f.submit('コメントする', class: "btn btn-primary") %>
-<% end %>
-
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
+  <div class="form-group">
+    <%= f.text_area :text, class: 'form-control', rows: "3"%>
+  </div>
+  <%= f.submit('投稿する', class: 'btn btn-primary')%>
 <% end %>
 <br>
-<a class="btn btn-secondary" type="button" href='#top'>ページ先頭へ</a>
-
+<a id="bottom" class="btn btn-secondary" type="button" href='#top'>ページ先頭へ</a>
 
