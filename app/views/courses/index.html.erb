@@ -104,7 +104,7 @@
     </tr>
     <% @courses.each do |c| %>
       <tr>
-        <td class='comment_count'><%= c.comments.size %></td>
+        <td class='comment_count'><%= c.comment_count %></td>
         <td class='course_title_japanese'><%= link_to(c.course_title_japanese, url_for(controller: 'courses', action: 'show', id: c.uniqueslug))%></td>
         <td class='course_title_english'><%= c.course_title_english %></td>
         <td class='day_and_period'><%= c.day_and_period %></td>
@@ -117,10 +117,13 @@
         <td class='cluster_and_department'><%= c.cluster_and_department %></td>
         <td class='lecturer'><%= c.lecturer %></td>
         <td class='course_website' style="word-wrap:break-word;">
-          <% if (url = URI.extract(c.course_website).join("\n")).empty? %>
+          <% if (urls = URI.extract(c.course_website, ['http', 'https'])).empty? %>
             <%= c.course_website %>
           <% else %>
-            <%= link_to c.course_website, URI.extract(c.course_website).first %>
+             <% html = urls.inject(c.course_website) do |text, url| %>
+               <% text.gsub(url , (link_to url, url)) %>
+             <% end %>
+             <%= raw html %>
           <% end %>
         </td>
       </tr>

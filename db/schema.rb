@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_063942) do
+ActiveRecord::Schema.define(version: 2020_03_28_034635) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "course_id"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_063942) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "year_id"
+    t.integer "comment_count", default: 0
     t.index ["year_id"], name: "index_courses_on_year_id"
   end
 
