@@ -1,6 +1,8 @@
 <% breadcrumb :course_index %>
 <%= breadcrumbs pretext: '', separator: ' / ' %>
 
+<%= react_component("HelloWorld", { courses: @courses[0..3] }) %>
+
 <br>
 <% if @query %>
   <h2>「<%= @query %>」の全文検索結果</h2>
@@ -102,7 +104,7 @@
         </form>
       </th>
     </tr>
-    <% @courses.each do |c| %>
+    <% @courses[0..5].each do |c| %>
       <tr>
         <td class='comment_count'><%= c.comment_count %></td>
         <td class='course_title_japanese'><%= link_to(c.course_title_japanese, url_for(controller: 'courses', action: 'show', id: c.uniqueslug))%></td>
