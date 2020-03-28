@@ -74,11 +74,16 @@
     </tr>
     <tr>
       <th scope="row">授業関連Webページ</th>
-      <% if (url = URI.extract(@course.course_website).join("\n")).empty? %>
-        <td><%= @course.course_website %></td>
-      <% else %>
-        <td><%= link_to @course.course_website, URI.extract(@course.course_website).first %></td>
-      <% end %>
+      <td>
+        <% if (urls = URI.extract(@course.course_website, ['http', 'https'])).empty? %>
+          <%= @course.course_website %>
+        <% else %>
+          <% html = urls.inject(@course.course_website) do |text, url| %>
+            <% text.gsub(url , (link_to url, url)) %>
+          <% end %>
+        <%= raw html %>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th scope="row">更新日</th>
