@@ -32,7 +32,6 @@ gem "gretel" # パンくずリスト
 gem "diff-lcs" # LCS
 gem 'rename'
 gem 'friendly_id'
-gem 'react-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
