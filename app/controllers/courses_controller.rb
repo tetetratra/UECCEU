@@ -34,9 +34,17 @@ class CoursesController < ApplicationController
   ]
 
   def index
+    @year       = Year.friendly.find(params.require(:year_id))
+    @courses    = @year.courses.page(params[:page]).per(100)
+    @pre_params = {}
+  end
+
+  def search
     params.permit!
     @year    = Year.friendly.find(params.require(:year_id))
-    @courses = @year.courses.then { |courses|
+    @courses = @year.courses.then{ |courses|
+      params[:url_name].blank? ? courses : courses.where(url_name: params[:url_name])
+    }.then { |courses|
       (MAIN_COLUMNS - [:credits, :comment_sort, :query]).inject(courses) do |cou, col|
         params[col].blank? ? cou : cou.where("#{col} REGEXP ?" , params[col])
       end
@@ -59,9 +67,11 @@ class CoursesController < ApplicationController
       if params[:query].blank?
         courses
       else
-        courses.where("CONCAT(#{SUB_COLUMNS.join(',')}) LIKE ?", '%' + params[:query] + '%')
+        params[:query].split(/[[:space:]]/).inject(courses) do |c, q|
+          c.where("CONCAT(#{SUB_COLUMNS.join(',')}) LIKE ?", '%' + q + '%')
+        end
       end
-    }.page(params[:page]).per(200)
+    }.page(params[:page]).per(100)
     @pre_params = MAIN_COLUMNS.map do |col|
       { col => params[col] }
     end.inject(:merge)
