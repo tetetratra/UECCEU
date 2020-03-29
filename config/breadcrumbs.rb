@@ -14,8 +14,9 @@ crumb :year do
 end
 
 crumb :course_index do
-  link '授業一覧', year_courses_path
-  parent :year
+  year_text = (params[:year_id] || params[:id]).to_s + '年の授業一覧'
+  link year_text, year_courses_path
+  parent :root
 end
 
 crumb :course do

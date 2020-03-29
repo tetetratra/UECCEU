@@ -2,105 +2,130 @@
 <%= breadcrumbs pretext: '', separator: ' / ' %>
 
 <br>
-<% if @query %>
-  <h2>「<%= @query %>」の全文検索結果</h2>
-<% else %>
-  <h2><%= @year.year %>年度の授業一覧</h2>
+<h2><%= @year.year %>年度の授業一覧</h2>
+
+
+<%= form_with(url: year_courses_path, local: true, method: :get, class: '') do |f| %>
+  <div class="form-group form-inline">
+    <%= f.label('コメントソート', class: 'input-group-text', for: 'comment_sort') %>
+    <%= f.select(:comment_sort, options_for_select({"-" => :none, '降順▼' => :desc, '新しい順' => :new}, @pre_params[:comment_sort]), {}, class: 'form-control' ) %>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('授業科目名	', class: 'input-group-text', for: 'course_title_japanese') %>
+    <%= f.text_field(:course_title_japanese, value: @pre_params[:course_title_japanese], placeholder: '正規|表現|ok', class: 'form-control', id: 'course_title_japanese')%>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('英文授業科目名', class: 'input-group-text', for: 'course_title_english') %>
+    <%= f.text_field(:course_title_english, value: @pre_params[:course_title_english], placeholder: '', class: 'form-control', id: 'course_title_english')%>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('曜日・時限', class: 'input-group-text', for: 'day_and_period') %>
+    <%= f.text_field :day_and_period, value: @pre_params[:day_and_period], placeholder: '[月火水木金]1', class: 'form-control', id: 'day_and_period', list: 'day_and_period_list' %>
+    <datalist id="day_and_period_list">
+      <% '他|他, 他|月1|月1, 月2|月1, 火1|月2|月2, 月3|月2, 月3, 月4|月2, 月4|月2, 木2|月2, 水4|月3|月3, 月4|月3, 月4, 水3, 水4|月3, 木2| 月3, 水3|月4|月4, 水4|月5|月5, 月6|木1|木2|木2, 木3, 木4|木3|木3, 木4|木4|木5|木5, 他|木6, 木7|水1|水2|水2, 水3, 水4|水2, 金4|水3|水3, 水4|水4|水5|水5, 水6|火1|火1, 火2|火2|火2, 火3|火2, 火3, 火4|火3|火3, 火4|火4|火5|金1|金1, 金2|金2|金2, 金3|金2, 金3, 金4|金3|金3, 金4|金4|金5'.split('|').each do |d| %>
+        <option value="<%= d %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('時間割コード', class: 'input-group-text', for: 'timetable_code') %>
+    <%= f.text_field(:timetable_code, value: @pre_params[:timetable_code], placeholder: '', class: 'form-control', id: 'timetable_code')%>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('開講年次', class: 'input-group-text', for: 'year_offerd') %>
+    <%= f.text_field :year_offerd, value: @pre_params[:year_offerd], class: 'form-control', id: 'year_offerd', list: 'year_offerd_list' %>
+    <datalist id="year_offerd_list">
+      <% '1|1/2|1/2/3|1/2/3/4|2|2/3/4|3|3/4|4'.split('|').each do |d| %>
+        <option value="<%= d %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('開講学期', class: 'input-group-text', for: 'semester_offerd') %>
+    <%= f.text_field :semester_offerd, value: @pre_params[:semester_offerd], class: 'form-control', id: 'semester_oferd', list: 'semester_offerd_list' %>
+    <datalist id="semester_offerd_list">
+      <% '前学期|後学期|通年'.split('|').each do |d| %>
+        <option value="<%= d %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('開講コース・課程', class: 'input-group-text', for: 'faculty_offering_the_course') %>
+    <%= f.text_field :faculty_offering_the_course, value: @pre_params[:faculty_offering_the_course], class: 'form-control', id: 'faculty_offering_the_course', list: 'faculty_offering_the_course_list' %>
+    <datalist id="faculty_offering_the_course_list">
+      <% '情報理工学域'.split('|').each do |d| %>
+        <option value="<%= d %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('単位数', class: 'input-group-text', for: 'credits') %>
+    <%= f.select(:credits, options_for_select([nil, *%W[1 2 3 4 5 1↑ 2↑ 3↑ 4↑ 5↑]], @pre_params[:credits]), {}, class: 'form-control', id: 'credits') %>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('科目区分', class: 'input-group-text', for: 'category') %>
+    <%= f.text_field :category, value: @pre_params[:category], class: 'form-control', id: 'category', list: 'category_list' %>
+    <datalist id="category_list">
+      <% '実践教育科目|専門科目|教職科目|総合文化科目'.split('|').each do |d| %>
+        <option value="<%= d %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('開講学科・専攻', class: 'input-group-text', for: 'cluster_and_department') %>
+    <%= f.text_field :cluster_and_department, value: @pre_params[:cluster_and_department], class: 'form-control', id: 'cluster_and_department', list: 'cluster_and_department_list' %>
+    <datalist id="cluster_and_department_list">
+      <% 'Ⅰ類|Ⅰ類/Ⅱ類|Ⅱ類|Ⅱ類/Ⅲ類|Ⅲ類|情報理工学域'.split('|').each do |d| %>
+        <option value="<%= d %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('担当教員名', class: 'input-group-text', for: 'lecturer') %>
+    <%= f.text_field(:lecturer, value: @pre_params[:lecturer], placeholder: '', class: 'form-control', id: 'lecturer')%>
+  </div>
+
+  <div class="form-group form-inline">
+    <%= f.label('シラバス全文検索', class: 'input-group-text', for: 'query') %>
+    <%= f.text_field(:query, value: @pre_params[:query], placeholder: '複数 単語 ok', class: 'form-control', id: 'query')%>
+  </div>
+  <%= f.submit('検索', class: 'btn btn-outline-success') %>
 <% end %>
 
-<%= form_with(url: year_courses_path, local: true, method: :get, class: 'form-inline mt-2 mt-md-0') do |f| %>
-  <div class="input-group-prepend">
-    <%= f.label('シラバス全文検索', class: 'input-group-text') %>
-    <%= f.text_field(:query, placeholder: '単語検索', class: 'form-control mr-sm-2')%>
-    <%= f.submit('検索', class: 'btn btn-outline-success my-2 my-sm-0') %>
-  </div>
-<% end %>
 
 <br>
-<p>検索やソートに失敗するときはページをリロードしてみてください</p>
+
+
+
+<%= paginate @courses %>
 
 <table class="table table_index table-sm table-bordered">
   <thead class="thead-light">
     <tr class='header_row'>
-      <th scope="row" class="row_tiny">💬</th>
-      <th scope="row">授業科目名</th>
-      <th scope="row">英文授業科目名</th>
-      <th scope="row" class="row_small">曜日・時限</th>
-      <th scope="row" class="row_small">時間割コード</th>
-      <th scope="row" class="row_small">開講年次</th>
-      <th scope="row" class="row_small">開講学期</th>
-      <th scope="row">開講コース・課程</th>
-      <th scope="row" class="row_tiny">単位数</th>
-      <th scope="row">科目区分</th>
-      <th scope="row">開講学科・専攻</th>
-      <th scope="row">担当教員名</th>
-      <th scope="row">授業関連Webページ</th>
-    </tr>
-    <tr class='header_row'>
-      <th scope="row" class="row_tiny">
-        <button id='sort_button_asc' type="button" class="btn btn-light btn-xm" style="font-size: 0.5em;">▲</button>
-        <button id='sort_button_desc' type="button" class="btn btn-light btn-xm" style="font-size: 0.5em;">▼</button>
-      </th>
-      <th scope="row">
-        <form class='search_form course_title_japanese'>
-          <input class="form-control" type="text" placeholder="正規|表現|ok">
-        </form>
-      </th>
-      <th scope="row">
-        <form class='search_form course_title_english'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row" class="row_small">
-        <form class='search_form day_and_period'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row" class="row_small">
-        <form class='search_form timetable_code'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row" class="row_small">
-        <form class='search_form year_offerd'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row" class="row_small">
-        <form class='search_form semester_offerd'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row">
-        <form class='search_form faculty_offering_the_course'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row" class="row_small">
-        <form class='search_form credits'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row">
-        <form class='search_form category'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row">
-        <form class='search_form cluster_and_department'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row">
-        <form class='search_form lecturer'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
-      <th scope="row">
-        <form class='search_form course_website'>
-          <input class="form-control" type="text" placeholder="">
-        </form>
-      </th>
+      <th scope="row" class="comment_count row_tiny">💬</th>
+      <th scope="row" class="course_title_japanese">授業科目名</th>
+      <th scope="row" class="course_title_english">英文授業科目名</th>
+      <th scope="row" class="day_and_period row_small">曜日・時限</th>
+      <th scope="row" class="timetable_code row_small">時間割コード</th>
+      <th scope="row" class="year_offerd row_small">開講年次</th>
+      <th scope="row" class="semester_offerd row_small">開講学期</th>
+      <th scope="row" class="faculty_offering_the_course">開講コース・課程</th>
+      <th scope="row" class="credits row_tiny">単位数</th>
+      <th scope="row" class="category">科目区分</th>
+      <th scope="row" class="cluster_and_department">開講学科・専攻</th>
+      <th scope="row" class="lecturer">担当教員名</th>
+      <th scope="row" class="course_website">授業関連Webページ</th>
     </tr>
     <% @courses.each do |c| %>
       <tr>
@@ -130,3 +155,4 @@
     <% end %>
   </thead>
 </table>
+<%= paginate @courses %>
