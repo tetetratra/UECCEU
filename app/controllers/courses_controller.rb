@@ -13,7 +13,8 @@ class CoursesController < ApplicationController
     :category,
     :cluster_and_department,
     :lecturer,
-    :query
+    :query,
+    :url_name
   ]
 
   SUB_COLUMNS = [ # 全検索で調べるカラム
@@ -43,9 +44,9 @@ class CoursesController < ApplicationController
     params.permit!
     @year    = Year.friendly.find(params.require(:year_id))
     @courses = @year.courses.then{ |courses|
-      params[:url_name].blank? ? courses : courses.where(url_name: params[:url_name])
+      params[:url_name].blank? ? courses : courses.where('url_name LIKE ?', params[:url_name] + '%')
     }.then { |courses|
-      (MAIN_COLUMNS - [:credits, :comment_sort, :query]).inject(courses) do |cou, col|
+      (MAIN_COLUMNS - [:credits, :comment_sort, :query, :url_name]).inject(courses) do |cou, col|
         params[col].blank? ? cou : cou.where("#{col} REGEXP ?" , params[col])
       end
     }.then { |courses|
