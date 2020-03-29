@@ -1,28 +1,70 @@
 class CoursesController < ApplicationController
-  COLUMNS = [ # 全検索で調べるカラム
-   'course_title_japanese',
-   'course_title_english',
-   'topic_and_goals',
-   'prerequisites',
-   'recommended_prerequisites_and_preparation',
-   'course_textbooks_and_materials',
-   'course_outline_and_weekly_schedule',
-   'course_content_utilizing_practical_experience',
-   'preparation_and_review_outside_class',
-   'evaluation_and_grading',
-   'office_hours',
-   'message_for_students',
-   'other',
-   'keyword'
-  ].join(',').freeze
+
+  MAIN_COLUMNS = [
+    :comment_sort,
+    :course_title_japanese,
+    :course_title_english,
+    :day_and_period,
+    :timetable_code,
+    :year_offerd,
+    :semester_offerd,
+    :faculty_offering_the_course,
+    :credits,
+    :category,
+    :cluster_and_department,
+    :lecturer,
+    :query
+  ]
+
+  SUB_COLUMNS = [ # 全検索で調べるカラム
+   :course_title_japanese,
+   :course_title_english,
+   :topic_and_goals,
+   :prerequisites,
+   :recommended_prerequisites_and_preparation,
+   :course_textbooks_and_materials,
+   :course_outline_and_weekly_schedule,
+   :course_content_utilizing_practical_experience,
+   :preparation_and_review_outside_class,
+   :evaluation_and_grading,
+   :office_hours,
+   :message_for_students,
+   :other,
+   :keyword
+  ]
 
   def index
-    @year    = Year.friendly.find(params.require('year_id'))
-    @courses = if @query = params.permit(:query)[:query]
-                 @year.courses.where("CONCAT(#{COLUMNS}) LIKE ?", '%' + @query + '%')
-               else
-                 @year.courses
-               end
+    params.permit!
+    @year    = Year.friendly.find(params.require(:year_id))
+    @courses = @year.courses.then { |courses|
+      (MAIN_COLUMNS - [:credits, :comment_sort, :query]).inject(courses) do |cou, col|
+        params[col].blank? ? cou : cou.where("#{col} REGEXP ?" , params[col])
+      end
+    }.then { |courses|
+      n, o = *params[:credits]&.chars
+      if n.blank?
+        courses
+      elsif o.nil?
+        courses.where(credits: n)
+      else
+        courses.where('credits >= ?', n)
+      end
+    }.then { |courses|
+      case params[:comment_sort]
+      when 'desc' then courses.order('comment_count DESC')
+      when 'new'  then courses.order('updated_at DESC')
+      else             courses
+      end
+    }.then { |courses|
+      if params[:query].blank?
+        courses
+      else
+        courses.where("CONCAT(#{SUB_COLUMNS.join(',')}) LIKE ?", '%' + params[:query] + '%')
+      end
+    }.page(params[:page]).per(200)
+    @pre_params = MAIN_COLUMNS.map do |col|
+      { col => params[col] }
+    end.inject(:merge)
   end
 
   def show
