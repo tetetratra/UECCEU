@@ -19,6 +19,12 @@ crumb :course_index do
   parent :root
 end
 
+crumb :search_index do
+  link '検索結果', year_courses_search_path
+  parent :course_index
+end
+
+
 crumb :course do
   link params[:id], year_course_path
   parent :course_index

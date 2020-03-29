@@ -13,18 +13,8 @@ table.table_index{
     width: 60px;
   }
 }
+
 table.table_show{
   table-layout: fixed;
-  th {
-    width: 200px;
-  }
-}
-
-th.row_tiny > button {
-  height: 22px;
-  padding: 2px 5px;
-  font-size: 12px;
-  line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
-  border-radius: 3px;
 }
 
