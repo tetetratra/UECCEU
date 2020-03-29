@@ -115,11 +115,17 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-4">
         <div class="form-group form-inline">
-          <%= f.label('シラバス全文検索', class: 'input-group-text', for: 'query') %>
+          <%= f.label('科目URL検索', class: 'input-group-text text-uppercase', for: 'url_name') %>
+          <%= f.text_field(:url_name, value: @pre_params[:url_name], placeholder: '前方一致', class: 'form-control', id: 'query')%>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-5">
+        <div class="form-group form-inline">
+          <%= f.label('シラバス全文単語検索', class: 'input-group-text', for: 'query') %>
           <%= f.text_field(:query, value: @pre_params[:query], placeholder: '空白で区切るとAND検索', class: 'form-control', id: 'query')%>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="col-xs-12 col-sm-6 col-md-3">
         <%= f.submit('検索', class: 'btn btn-outline-success') %>
       </div>
     </div>
