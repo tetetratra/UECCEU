@@ -1,7 +1,8 @@
 require_relative './crawler.rb'
 require_relative './parser.rb'
 
-year = gets.to_i
+year = 2020
+year_rec = Year.find_by(year: year)
 
 facultys_page = Crawler.crawl_facultys(year)
 faculty_urls  = Parser.parse_facultys(facultys_page)
@@ -16,17 +17,16 @@ faculty_urls.each do |faculty_url|
   course_list      = Parser.parse_course_list(course_list_page )
 
   course_list.each do |course_info|
-    sleep 0.5
     puts course_info[:text]
     course_page = Crawler.crawl_course(year, course_info)
-    course      = Parser.parse_course(course_page, year, course_info)
-    Course.create(course)
+    course      = Parser.parse_course(course_page, course_info)
+    year_rec.courses.create(course)
   end
 end
 
 # add inner_index
 counter = Hash.new(1)
-Course.all.each do |course|
+year_rec.courses.each do |course|
   ind = counter[course.url_name]
   course.update(inner_index: ind)
   counter[course.url_name] += 1

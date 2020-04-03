@@ -23,7 +23,7 @@ class Parser
     course_list
   end
 
-  def self.parse_course(course_page, year, course_info)
+  def self.parse_course(course_page, course_info)
     doc = Nokogiri::HTML.parse(course_page)
     course = doc.css('table.syllabus-normal th + td').map { |cell_node|
       cell_node.children.slice_when{|n| n.name == 'br' }
@@ -69,7 +69,6 @@ class Parser
       {
         day_and_period: course_info[:day_and_period],
         timetable_code: course_info[:timetable_code],
-        year: year,
         url_name: course[:course_title_english].gsub(/\s/, '_').downcase.then{ |init_str|
           ['ⅰ','ⅱ','ⅲ','ⅳ','ⅴ','ⅵ','ⅶ','ⅷ','ⅸ','ⅹ']
           .each.with_index(1)
