@@ -1,8 +1,7 @@
 require_relative './crawler.rb'
 require_relative './parser.rb'
 
-# (2010..2019)
-year = 2019
+year = gets.to_i
 
 facultys_page = Crawler.crawl_facultys(year)
 faculty_urls  = Parser.parse_facultys(facultys_page)
@@ -25,7 +24,7 @@ faculty_urls.each do |faculty_url|
   end
 end
 
-
+# add inner_index
 counter = Hash.new(1)
 Course.all.each do |course|
   ind = counter[course.url_name]
