@@ -36,6 +36,10 @@ class CoursesController < ApplicationController
 
   def index
     @year       = Year.friendly.find(params.require(:year_id))
+    binding.pry
+    # if @year.courses.order('updated_at DESC').first.updated_at < Time.now.ago(1.day)
+    #   Sample.new
+    # end
     @courses    = @year.courses.page(params[:page]).per(100)
     @pre_params = {}
   end
