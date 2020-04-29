@@ -9,10 +9,9 @@ class ApplicationController < ActionController::Base
   end
 
   def crawl
-    current_year = Time.now.year
     if CrawlHistory.all.empty? || CrawlHistory.last.created_at < Time.now.ago(1.day)
       CrawlHistory.create
-      CampusCrawler::Handler.start_crawling
+      CampusCrawler::Handler.start_crawling(params[:year]&.to_i)
       return render plain: 'クロール完了'
     end
     render plain: 'クロール実行済み'
