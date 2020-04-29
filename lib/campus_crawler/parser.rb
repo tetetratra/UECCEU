@@ -72,7 +72,6 @@ module CampusCrawler
         category = CATEGORY_MASTER[cell_node.previous.previous.text.split('/')[0].strip]
         { category => text }
       end.inject(:merge)
-      binding.pry
       course_full = course.merge(
         {
           updated_date: doc.at_css('body > div[style] > b').text[%r{\d+/\d+/\d+}].then { |te| Time.strptime(te, '%Y/%m/%d') },
