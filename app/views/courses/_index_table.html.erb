@@ -11,7 +11,18 @@
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <div class="form-group form-inline">
-          <%= f.label('授業科目名	', class: 'input-group-text', for: 'course_title_japanese') %>
+          <%= f.label('課程', class: 'input-group-text', for: 'curriculum') %>
+          <%= f.text_field :curriculum, value: @pre_params[:curriculum], placeholder: '', class: 'form-control', id: 'curriculum', list: 'curriculum_list' %>
+          <datalist id="curriculum_list">
+            <% '情報理工学域|情報理工学域夜間主コース|情報理工学部|情報理工学部夜間主コース　先端工学基礎課程|情報理工学研究科（博士前期課程）（2016～）|情報理工学研究科（博士後期課程）（2016～）|情報理工学研究科（博士前期課程）（2010～）|情報理工学研究科（博士後期課程）（2010～）|電気通信学部|電気通信学部　夜間主コース|電気通信学研究科（博士前期課程）|電気通信学研究科（博士後期課程）|情報システム学研究科（博士前期課程）|情報システム学研究科（博士後期課程）'.split('|').each do |d| %>
+              <option value="<%= d %>">
+            <% end %>
+          </datalist>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="form-group form-inline">
+          <%= f.label('授業科目名', class: 'input-group-text', for: 'course_title_japanese') %>
           <%= f.text_field(:course_title_japanese, value: @pre_params[:course_title_japanese], placeholder: '正規|表現|ok', class: 'form-control', id: 'course_title_japanese')%>
         </div>
       </div>
@@ -26,7 +37,7 @@
       <div class="col-xs-12 col-sm-6 col-md-4">
         <div class="form-group form-inline">
           <%= f.label('曜日・時限', class: 'input-group-text', for: 'day_and_period') %>
-          <%= f.text_field :day_and_period, value: @pre_params[:day_and_period], placeholder: '[月火水木金]1', class: 'form-control', id: 'day_and_period', list: 'day_and_period_list' %>
+          <%= f.text_field :day_and_period, value: @pre_params[:day_and_period], placeholder: '', class: 'form-control', id: 'day_and_period', list: 'day_and_period_list' %>
           <datalist id="day_and_period_list">
             <% '他|他, 他|月1|月1, 月2|月1, 火1|月2|月2, 月3|月2, 月3, 月4|月2, 月4|月2, 木2|月2, 水4|月3|月3, 月4|月3, 月4, 水3, 水4|月3, 木2| 月3, 水3|月4|月4, 水4|月5|月5, 月6|木1|木2|木2, 木3, 木4|木3|木3, 木4|木4|木5|木5, 他|木6, 木7|水1|水2|水2, 水3, 水4|水2, 金4|水3|水3, 水4|水4|水5|水5, 水6|火1|火1, 火2|火2|火2, 火3|火2, 火3, 火4|火3|火3, 火4|火4|火5|金1|金1, 金2|金2|金2, 金3|金2, 金3, 金4|金3|金3, 金4|金4|金5'.split('|').each do |d| %>
               <option value="<%= d %>">
@@ -122,7 +133,7 @@
       <div class="col-xs-12 col-sm-6 col-md-5">
         <div class="form-group form-inline">
           <%= f.label('シラバス全文単語検索', class: 'input-group-text', for: 'query') %>
-          <%= f.text_field(:query, value: @pre_params[:query], placeholder: '空白で区切るとAND検索', class: 'form-control', id: 'query')%>
+          <%= f.text_field(:query, value: @pre_params[:query], placeholder: '', class: 'form-control', id: 'query')%>
         </div>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
@@ -141,6 +152,7 @@
   <thead class="thead-light">
     <tr class='header_row'>
       <th scope="row" class="comment_count row_tiny">💬</th>
+      <th scope="row" class="curriculum row_tiny">課程</th>
       <th scope="row" class="course_title_japanese">授業科目名</th>
       <th scope="row" class="course_title_english">英文授業科目名</th>
       <th scope="row" class="day_and_period row_small">曜日・時限</th>
@@ -157,6 +169,7 @@
     <% @courses.each do |c| %>
       <tr>
         <td class='comment_count'><%= c.comment_count %></td>
+        <td class='curriculum'><%= c.curriculum %></td>
         <td class='course_title_japanese'><%= link_to(c.course_title_japanese, url_for(controller: 'courses', action: 'show', id: c.uniqueslug))%></td>
         <td class='course_title_english'><%= c.course_title_english %></td>
         <td class='day_and_period'><%= c.day_and_period %></td>
