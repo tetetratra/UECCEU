@@ -5,7 +5,7 @@
   <br>
   <p>直近の反映: <%= CrawlHistory.last.created_at.strftime('%Y/%m/%d') %></p>
   <ul>
-    <% Year.all.map(&:year).each do |year| %>
+    <% Year.all.select{ |y| y.courses.size > 0 }.map(&:year).sort.each do |year| %>
       <li>
         <h2><a href='/years/<%= year %>/courses'><%= year %>年の授業一覧</a></h2>
         <ul>
