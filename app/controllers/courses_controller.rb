@@ -2,6 +2,7 @@ class CoursesController < ApplicationController
 
   MAIN_COLUMNS = [
     :comment_sort,
+    :curriculum,
     :course_title_japanese,
     :course_title_english,
     :day_and_period,
@@ -36,10 +37,6 @@ class CoursesController < ApplicationController
 
   def index
     @year       = Year.friendly.find(params.require(:year_id))
-    binding.pry
-    # if @year.courses.order('updated_at DESC').first.updated_at < Time.now.ago(1.day)
-    #   Sample.new
-    # end
     @courses    = @year.courses.page(params[:page]).per(100)
     @pre_params = {}
   end
@@ -50,8 +47,14 @@ class CoursesController < ApplicationController
     @courses = @year.courses.then{ |courses|
       params[:url_name].blank? ? courses : courses.where('url_name LIKE ?', params[:url_name] + '%')
     }.then { |courses|
-      (MAIN_COLUMNS - [:credits, :comment_sort, :query, :url_name]).inject(courses) do |cou, col|
-        params[col].blank? ? cou : cou.where("#{col} REGEXP ?" , params[col])
+      (MAIN_COLUMNS - [:curriculum, :credits, :comment_sort, :query, :url_name]).inject(courses) do |cou, col|
+        params[col].blank? ? cou : cou.where("#{col} REGEXP ?", params[col])
+      end
+    }.then { |courses|
+      if params[:curriculum].blank?
+        courses
+      else
+        courses.where(curriculum: params[:curriculum])
       end
     }.then { |courses|
       n, o = *params[:credits]&.chars

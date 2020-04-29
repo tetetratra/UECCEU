@@ -1,0 +1,2 @@
+class CrawlHistory < ApplicationRecord
+end

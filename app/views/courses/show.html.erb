@@ -5,16 +5,22 @@
 
 <div class="container">
   <h1><%= @course.course_title_japanese %></h1>
+  <p><%= @course.updated_date.strftime('%Y年%-m月%-d日') %> 現在</p>
+
   <%= link_to("同名科目を検索", year_courses_search_path(url_name: @course.url_name), class: 'btn btn-success', type: 'button') %>
-  <br>
-  <br>
   <a id="comments" class="btn btn-secondary" type="button" href='#bottom'>コメントを見る</a>
+  <br>
+  <br>
 
   <table class="table table_show">
     <thead class="thead-light">
       <tr>
         <th scope="row">授業科目名</th>
         <td colspan="3"><%= raw @course.course_title_japanese.then{|x|nl2br(x)} %></td>
+      </tr>
+      <tr>
+        <th scope="row">課程</th>
+        <td colspan="3"><%= raw @course.curriculum.then{|x|nl2br(x)} %></td>
       </tr>
       <tr>
         <th scope="row">英文授業科目名</th>

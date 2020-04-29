@@ -7,4 +7,14 @@ class ApplicationController < ActionController::Base
   def render_404
     render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'
   end
+
+  def crawl
+    current_year = Time.now.year
+    if CrawlHistory.all.empty? || CrawlHistory.last.created_at < Time.now.ago(1.day)
+      CrawlHistory.create
+      CampusCrawler::Handler.start_crawling
+      return render plain: 'クロール完了'
+    end
+    render plain: 'クロール実行済み'
+  end
 end
