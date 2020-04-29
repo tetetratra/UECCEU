@@ -54,7 +54,7 @@ class CoursesController < ApplicationController
       if params[:curriculum].blank?
         courses
       else
-        courses.where(curriculum: params[:curriculum])
+        courses.where("curriculum LIKE ?", params[:curriculum] + '%')
       end
     }.then { |courses|
       n, o = *params[:credits]&.chars

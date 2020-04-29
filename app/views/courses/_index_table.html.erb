@@ -6,7 +6,7 @@
       <div class="col-xs-12 col-sm-6 col-md-4">
         <div class="form-group form-inline">
           <%= f.label('コメントソート', class: 'input-group-text', for: 'comment_sort') %>
-          <%= f.select(:comment_sort, options_for_select({"-" => :none, '多い順' => :desc, '新しい順' => :new}, @pre_params[:comment_sort]), {}, class: 'form-control' ) %>
+          <%= f.select(:comment_sort, options_for_select({"-" => :none, '多い順' => :desc}, @pre_params[:comment_sort]), {}, class: 'form-control' ) %>
         </div>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
