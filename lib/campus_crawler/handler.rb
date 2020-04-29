@@ -1,7 +1,6 @@
 module CampusCrawler
   class Handler
-    def self.start_crawling
-      current_year  = Time.now.year
+    def self.start_crawling(current_year = Time.now.year)
       if Year.find_by(year: current_year).nil?
         year_rec = Year.create(year: current_year)
       else
