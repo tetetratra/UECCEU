@@ -3,10 +3,24 @@
 <div class="container">
   <h1>UEC Campus info Explorer and Uploader</h1>
   <br>
+  <p>直近の反映: <%= CrawlHistory.last.created_at.strftime('%Y/%m/%d') %></p>
   <ul>
-    <li><h2><a href='/years/2019/courses'>2019年の授業一覧</a></h2></li>
-    <li><h2><a href='/years/2020/courses'>2020年の授業一覧</a></h2></li>
+    <% Year.all.map(&:year).each do |year| %>
+      <li>
+        <h2><a href='/years/<%= year %>/courses'><%= year %>年の授業一覧</a></h2>
+        <ul>
+          <% %w[情報理工学域 情報理工学域夜間主コース 情報理工学研究科 情報システム学研究科].each do |curriculum| %>
+            <li><a href='/years/<%= year %>/courses/search?curriculum=<%= curriculum %>'><%= curriculum %></a></li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
   </ul>
+
   <p>授業を検索したり、授業の感想を共有できたりします</p>
+
+  <p>なにかありましたら<a target="_blank" href="https://github.com/tetetratra/UECCEU">こちら</a>へお願いします</p>
+
   <p>インクリメンタルな検索には<a target="_blank" href="https://masa5555.github.io/uecSyllabusSearch/">uecSyllabusSearch</a>が便利です</p>
+
 </div>
