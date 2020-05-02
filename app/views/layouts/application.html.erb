@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>UECCEU</title>
+    <%# <title>UECCEU</title> %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application' %>
+    <title><%= content_for?(:html_title) ? yield(:html_title) : 'UEC Campus Explorer Uploader' %></title>
   </head>
 
   <body>

@@ -1,4 +1,6 @@
 <% breadcrumb :search_index %>
 <%= breadcrumbs style: :bootstrap, pretext: '', separator: ' / ' %>
 
+<% content_for(:html_title) { "#{@year.year}年のコース検索結果" } %>
+
 <%= render 'index_table' %>
